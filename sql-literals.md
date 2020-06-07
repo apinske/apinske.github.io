@@ -1,4 +1,4 @@
-# SQL Performance | Literal Values vs. Parameters
+# SQL Performance - Literal Values vs. Parameters
 
 Wer in Java-Anwendungen per JDBC Datenbankabfragen ausführt, benutzt fast immer "dynamisches SQL". Das bedeutet, 
 dass die Datenbank den Statement-Text zur Ausführungszeit in einen Zugriffsplan übersetzen muss. Die folgenden 
