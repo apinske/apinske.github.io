@@ -19,7 +19,7 @@ Wird im Statement hingegen ein Platzhalter angegeben, muss für das Statement nu
 werden, der dann für alle Werte wiederverwendet werden kann. 
 
 ```sql
-/* 2 /* select attribute1 from entity where attribute2 = ? -- bind ?1 to 4711
+/* 2 */ select attribute1 from entity where attribute2 = ? -- bind ?1 to 4711
 ```
 
 Man sollte also immer genau zwischen den Varianten abwägen. In einem Statement können Literale und Parameter beliebig
