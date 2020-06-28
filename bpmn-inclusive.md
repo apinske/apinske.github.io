@@ -50,10 +50,10 @@ During my first steps with BPMN I modelled a process that pushed these limit. I 
 
 It is a simple process, with a single join. What makes it problematic is that there might (based on a message event) be more than one token on one of the incoming flows going into the join. See the two example runs:
 
-![A](A.gif)
+![A](res/bpmn-inclusive/A.gif)
 A = simple execution, event not triggered: Task 2 completes, token waits at the join (as there is another token - in Task 1) coming towards it.
 
-![B](B.gif)
+![B](res/bpmn-inclusive/B.gif)
 B = First the event triggers (creating a second token in Task 2), those two tokens are then forward (Task 2 completed twice), that satisfies the condition on the join (two arriving tokens) - which it shouldn’t.
 
 This is - in my opinion - not a desired outcome, as the join did not really join two branches, but the same branch twice.
