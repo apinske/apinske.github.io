@@ -12,7 +12,7 @@ The minimal config requires 3 master nodes (m4.xlarge) and at least 2 (default 3
 That setup costs about $30 a day plus all the small fees for DNS, load balancing, traffic, etc.
 ![cost](res/ocp-aws/cost.png)
 
-This empty default cluster uses loads of ressources. The EC2 instances are paid for anyway, so why let it go to waste. 
+This empty default cluster uses loads of resources. The EC2 instances are paid for anyway, so why let it go to waste. 
 4 CPU, 16GB RAM, 30MB/s traffic bidirectional for an idle cluster. Wow!
 ![ocp](res/ocp-aws/ocp.png)
 
