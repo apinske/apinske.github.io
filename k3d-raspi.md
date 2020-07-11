@@ -21,7 +21,7 @@
     * `k3d create cluster demo -w 1 -p 80:80@loadbalancer`
 
 > .bashrc
-```
+```bash
 if command -v tmux &> /dev/null && [ -z "$TMUX" ]; then
   tmux attach -t default || tmux new -s default
 fi
@@ -32,4 +32,59 @@ fi
 set -g prefix C-a
 bind C-a send-prefix
 unbind C-b
+```
+
+> hello-kubernetes.yaml
+```yaml
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: hello-kubernetes
+  labels:
+    app: hello-kubernetes
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /
+        backend:
+          serviceName: hello-kubernetes
+          servicePort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hello-kubernetes
+  labels:
+    app: hello-kubernetes
+spec:
+  type: ClusterIP
+  ports:
+    - name: http
+      port: 80
+      targetPort: 80
+  selector:
+    app: hello-kubernetes
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-kubernetes
+  labels:
+    app: hello-kubernetes
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hello-kubernetes
+  template:
+    metadata:
+      labels:
+        app: hello-kubernetes
+    spec:
+      containers:
+      - name: hello-kubernetes
+        image: nginx
+        ports:
+        - containerPort: 80
 ```
