@@ -20,6 +20,8 @@
 * `sudo reboot`
 * setup k3s cluster
     * `sudo k3d create cluster raspi -w 1 -p 80:80@loadbalancer`
+    * `sudo k3d get kubeconfig -a -o -`
+    * move to local machine, replace 0.0.0.0 with host-name
 
 > .bashrc
 ```bash
