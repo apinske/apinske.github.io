@@ -11,6 +11,7 @@
 * install k3d
     * `wget https://github.com/rancher/k3d/releases/download/v3.0.0-rc.6/k3d-linux-arm64`
     * `sudo mv k3d-linux-arm64 /usr/local/bin/k3d`
+    * `sudo chmod +x /usr/local/bin/k3d`
 * add `cgroup_memory=1 cgroup_enable=memory` to `/boot/firmware/cmdline.txt`
 * optional: install kubectl
     * `curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -`
