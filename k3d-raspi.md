@@ -18,7 +18,7 @@
     * `sudo kubectl`
 * `sudo reboot`
 * setup k3s cluster
-    * `k3d create cluster demo -w 1 -p 80:80@loadbalancer`
+    * `sudo k3d create cluster raspi -w 1 -p 80:80@loadbalancer`
 
 > .bashrc
 ```bash
