@@ -24,6 +24,16 @@
     * move to local machine, replace 0.0.0.0 with host-name
 * samples
     * `kubectl run -i -t gcc --image=gcc --rm --command -- /bin/bash -i -l`
+* build k3s?
+    * `git clone https://github.com/rancher/k3s.git`
+    * `docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v /root/go:/go -v /root/k3s:/usr/src/k3s -w /usr/src/k3s golang /bin/bash`
+    * `apt-get update`
+    * `apt-get install software-properties-common`
+    * `curl https://download.docker.com/linux/ubuntu/gpg | apt-key add -`
+    * `add-apt-repository "deb [arch=arm64] https://download.docker.com/linux/debian buster stable"`
+    * `apt-get update`
+    * `apt-get install docker-ce-cli`
+    * `make`
 
 > .bashrc
 ```bash
