@@ -9,7 +9,7 @@
     * `sudo add-apt-repository "deb [arch=arm64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"`
     * `sudo apt-get install docker-ce docker-ce-cli containerd.io`
 * install k3d
-    * `wget https://github.com/rancher/k3d/releases/download/v3.0.0-rc.6/k3d-linux-arm64`
+    * `wget -O k3d-linux-arm64 https://github.com/rancher/k3d/releases/download/v3.0.0/k3d-linux-arm64`
     * `sudo mv k3d-linux-arm64 /usr/local/bin/k3d`
     * `sudo chmod +x /usr/local/bin/k3d`
 * add `cgroup_memory=1 cgroup_enable=memory` to `/boot/firmware/cmdline.txt`
@@ -19,21 +19,17 @@
     * `sudo kubectl`
 * `sudo reboot`
 * setup k3s cluster
-    * `sudo k3d create cluster raspi -w 1 -p 80:80@loadbalancer`
-    * `sudo k3d get kubeconfig -a -o -`
+    * `sudo k3d cluster create raspi -a 1 -p 80:80@loadbalancer`
+    * `sudo k3d kubeconfig get -a`
     * move to local machine, replace 0.0.0.0 with host-name
 * samples
     * `kubectl run -i -t gcc --image=gcc --rm --command -- /bin/bash -i -l`
-* build k3s?
+* build k3s
+    * `apt install make`
     * `git clone https://github.com/rancher/k3s.git`
-    * `docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v /root/go:/go -v /root/k3s:/usr/src/k3s -w /usr/src/k3s golang /bin/bash`
-    * `apt-get update`
-    * `apt-get install software-properties-common`
-    * `curl https://download.docker.com/linux/ubuntu/gpg | apt-key add -`
-    * `add-apt-repository "deb [arch=arm64] https://download.docker.com/linux/debian buster stable"`
-    * `apt-get update`
-    * `apt-get install docker-ce-cli`
     * `make`
+* run built k3s
+    * ...
 
 > .bashrc
 ```bash
