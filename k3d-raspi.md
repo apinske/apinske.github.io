@@ -29,7 +29,8 @@
     * `git clone https://github.com/rancher/k3s.git`
     * `make`
 * run built k3s
-    * ...
+    * find image id
+    * `k3d cluster create debug -a 1 -p 80:80@loadbalancer -i c4e1c8d53e11`
 
 ## .bashrc
 ```bash
