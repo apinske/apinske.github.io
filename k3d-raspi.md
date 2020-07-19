@@ -13,10 +13,10 @@
     * `sudo mv k3d-linux-arm64 /usr/local/bin/k3d`
     * `sudo chmod +x /usr/local/bin/k3d`
 * add `cgroup_memory=1 cgroup_enable=memory` to `/boot/firmware/cmdline.txt`
-* optional: install kubectl
+* *optional:* install kubectl
     * `curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -`
     * `sudo add-apt-repository "deb http://apt.kubernetes.io/ kubernetes-xenial main"`
-    * `sudo kubectl`
+    * `sudo apt-get install kubectl`
 * `sudo reboot`
 * setup k3s cluster
     * `sudo k3d cluster create raspi -a 1 -p 80:80@loadbalancer`
@@ -31,21 +31,21 @@
 * run built k3s
     * ...
 
-> .bashrc
+## .bashrc
 ```bash
 if command -v tmux &> /dev/null && [ -z "$TMUX" ]; then
   tmux attach -t default || tmux new -s default
 fi
 ```
 
-> .tmux.conf
+## .tmux.conf
 ```
 set -g prefix C-a
 bind C-a send-prefix
 unbind C-b
 ```
 
-> hello-kubernetes.yaml
+## hello-kubernetes.yaml
 ```yaml
 apiVersion: extensions/v1beta1
 kind: Ingress
