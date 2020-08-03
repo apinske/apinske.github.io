@@ -17,4 +17,6 @@
 
 * MBean Explorer, Flight Recorder
     * Mission Control, JConsole
-    * [hawt.io](https://hawt.io/docs/get-started/), [jolokia](https://jolokia.org/download.html)
+    * [hawt.io](https://hawt.io/docs/get-started/)
+        * deploy [jolokia](https://jolokia.org/download.html)
+        * run `java -jar -Dhawtio.proxyDisableCertificateValidation=true -Dhawtio.proxyAllowlist=* hawtio-app-2.10.1.jar`
