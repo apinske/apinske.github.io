@@ -17,4 +17,4 @@
 
 * MBean Explorer, Flight Recorder
     * Mission Control, JConsole
-    * [hawt.io](https://hawt.io/docs/get-started/)
+    * [hawt.io](https://hawt.io/docs/get-started/), [jolokia](https://jolokia.org/download.html)
