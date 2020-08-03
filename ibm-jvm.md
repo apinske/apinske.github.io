@@ -10,7 +10,8 @@
     * [IBM HeapAnalyzer](https://www.ibm.com/support/pages/ibm-heapanalyzer)
     * Download: [ha457.jar](https://public.dhe.ibm.com/software/websphere/appserv/support/tools/HeapAnalyzer/ha457.jar)
 
-# general JVM Tools (MBean Explorer, Flight Recorder)
+# general JVM Tools
 
-* Mission Control
-* [hawt.io](https://hawt.io/docs/get-started/)
+* MBean Explorer, Flight Recorder
+    * Mission Control
+    * [hawt.io](https://hawt.io/docs/get-started/)
