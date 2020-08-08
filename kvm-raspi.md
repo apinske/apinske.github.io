@@ -18,5 +18,6 @@
     * `apk add docker`
     * `rc-update add docker boot`
     * `service docker start`
+    * `lbu add /var/lib/docker`
     * `lbu commit`
 * [QEMU docs](https://www.qemu.org/docs/master/system/invocation.html)
