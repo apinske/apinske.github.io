@@ -8,5 +8,5 @@
     * `sudo apt install qemu-system-arm qemu-efi-aarch64`
     * `sudo adduser ubuntu kvm`
     * `wget http://dl-cdn.alpinelinux.org/alpine/v3.12/releases/aarch64/alpine-virt-3.12.0-aarch64.iso`
-    * `qemu-system-aarch64 -M virt -cpu host -accel kvm -nographic -m 1G -bios /usr/share/qemu-efi-aarch64/QEMU_EFI.fd -cdrom alpine-virt-3.12.0-aarch64.iso`
+    * `qemu-system-aarch64 -nodefaults -nographic -machine virt -cpu host -accel kvm -m 1G -bios /usr/share/qemu-efi-aarch64/QEMU_EFI.fd -blockdev driver=file,node-name=cd,filename=alpine-virt-3.12.0-aarch64.iso -device virtio-blk-pci,drive=cd -serial mon:stdio`
 * [QEMU docs](https://www.qemu.org/docs/master/system/invocation.html)
