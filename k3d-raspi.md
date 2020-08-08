@@ -7,7 +7,7 @@
 * install docker
     * `curl https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -`
     * `sudo add-apt-repository "deb [arch=arm64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"`
-    * `sudo apt-get install docker-ce docker-ce-cli containerd.io`
+    * `sudo apt install docker-ce docker-ce-cli containerd.io`
 * install k3d
     * `wget -O k3d-linux-arm64 https://github.com/rancher/k3d/releases/download/v3.0.0/k3d-linux-arm64`
     * `sudo mv k3d-linux-arm64 /usr/local/bin/k3d`
@@ -16,7 +16,7 @@
 * *optional:* install kubectl
     * `curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -`
     * `sudo add-apt-repository "deb http://apt.kubernetes.io/ kubernetes-xenial main"`
-    * `sudo apt-get install kubectl`
+    * `sudo apt install kubectl`
 * `sudo reboot`
 * setup k3s cluster
     * `sudo k3d cluster create raspi -a 1 -p 80:80@loadbalancer`
