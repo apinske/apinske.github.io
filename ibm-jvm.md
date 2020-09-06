@@ -4,7 +4,7 @@
     * [IBM Pattern Modeling and Analysis Tool for Java Garbage Collector](https://www.ibm.com/support/pages/ibm-pattern-modeling-and-analysis-tool-java-garbage-collector-pmat)
     * Download: [ga458.jar](https://public.dhe.ibm.com/software/websphere/appserv/support/tools/pmat/ga458.jar)
     * Heap (JDK 8, gencon)
-        * nursery (Xmns, Xmnx) - shored-lived
+        * nursery (Xmns, Xmnx) - short-lived
         * tenured (Xms, Xmx) - long-lived
 * Thread dumps (javacore)
     * [IBM Thread and Monitor Dump Analyzer for Java](https://www.ibm.com/support/pages/ibm-thread-and-monitor-dump-analyzer-java-tmda)
