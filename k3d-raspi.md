@@ -9,7 +9,7 @@
     * `sudo add-apt-repository "deb [arch=arm64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"`
     * `sudo apt install docker-ce docker-ce-cli containerd.io`
 * install k3d
-    * `wget -O k3d-linux-arm64 https://github.com/rancher/k3d/releases/download/v3.0.0/k3d-linux-arm64`
+    * `wget -O k3d-linux-arm64 https://github.com/rancher/k3d/releases/download/v3.1.1/k3d-linux-arm64`
     * `sudo mv k3d-linux-arm64 /usr/local/bin/k3d`
     * `sudo chmod +x /usr/local/bin/k3d`
 * add `cgroup_memory=1 cgroup_enable=memory` to `/boot/firmware/cmdline.txt`
