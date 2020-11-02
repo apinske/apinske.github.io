@@ -1,9 +1,6 @@
 # KVM on ARM64 (Raspberry Pi 4)
 
-* [Raspberry Pi Downloads](https://www.raspberrypi.org/downloads/)
-* Ubuntu 20.04.1 LTS (64bit)
-* wait for auto-update to complete: `tail -f /var/log/unattended-upgrades/unattended-upgrades-dpkg.log`
-* update: `sudo apt update && sudo apt upgrade`
+* [install Ubuntu](ubuntu-raspi.md)
 * install QEMU
     * `sudo apt install qemu-system-arm qemu-efi-aarch64`
     * `sudo adduser ubuntu kvm`
