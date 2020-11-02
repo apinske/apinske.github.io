@@ -1,9 +1,6 @@
 # k3d on Raspberry Pi
 
-* [Raspberry Pi Downloads](https://www.raspberrypi.org/downloads/)
-* Ubuntu 20.04 LTS (64bit)
-* wait for auto-update to complete: `tail -f /var/log/unattended-upgrades/unattended-upgrades-dpkg.log`
-* update: `sudo apt update && sudo apt upgrade`
+* install [Ubuntu](ubuntu-raspi.md)
 * install docker
     * `curl https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -`
     * `sudo add-apt-repository "deb [arch=arm64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"`
