@@ -1,6 +1,6 @@
 # k3d on Raspberry Pi
 
-* install [Ubuntu](ubuntu-raspi.md)
+* [install Ubuntu](ubuntu-raspi.md)
 * install docker
     * `curl https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -`
     * `sudo add-apt-repository "deb [arch=arm64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"`
