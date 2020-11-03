@@ -12,6 +12,8 @@
     * `mkdir /media/vda`
     * `mount -a`
     * `setup-alpine`
+    * uncomment community repo in `/etc/apk/repositories`
+    * `apk update`
     * `apk add docker`
     * `rc-update add docker boot`
     * `service docker start`
