@@ -13,7 +13,19 @@
 * install Alpine guest
     * `wget http://dl-cdn.alpinelinux.org/alpine/v3.12/releases/aarch64/alpine-virt-3.12.1-aarch64.iso`
     * `qemu-img create hd.raw 10G`
-    * `qemu-system-aarch64 -nodefaults -nographic -machine virt -cpu host -accel kvm -smp 2 -m 2G -bios /usr/share/qemu-efi-aarch64/QEMU_EFI.fd -blockdev driver=file,node-name=cd,filename=alpine-virt-3.12.1-aarch64.iso,read-only=on,force-share=on -device virtio-blk-device,drive=cd -chardev stdio,id=screen,mux=on,signal=off -serial chardev:screen -monitor chardev:screen -netdev tap,id=net,ifname=tap0,script=no,downscript=no -device virtio-net-device,netdev=net -blockdev driver=file,node-name=hd,filename=hd.raw -device virtio-blk-device,drive=hd`
+    * run
+
+        ```
+        qemu-system-aarch64 \
+            -nodefaults -nographic \
+            -machine virt -cpu host -accel kvm -smp 2 -m 2G \
+            -bios /usr/share/qemu-efi-aarch64/QEMU_EFI.fd \
+            -blockdev driver=file,node-name=cd,filename=alpine-virt-3.12.1-aarch64.iso,read-only=on,force-share=on -device virtio-blk-device,drive=cd \
+            -chardev stdio,id=screen,mux=on,signal=off -serial chardev:screen -monitor chardev:screen \
+            -netdev tap,id=net,ifname=tap0,script=no,downscript=no -device virtio-net-device,netdev=net \
+            -blockdev driver=file,node-name=hd,filename=hd.raw -device virtio-blk-device,drive=hd
+        ```
+
 * setup Alpine
     * `echo -en 'n;p;1;;+512M;n;p;2;;;w;' | tr ';' '\n' | fdisk /dev/vda`
     * `mkfs.vfat /dev/vda1`
