@@ -4,7 +4,7 @@
 * `xz -d ubuntu-20.10-preinstalled-server-arm64+raspi.img.xz`
 * `diskutil unmountDisk /dev/disk3`
 * `sudo dd bs=1m if=ubuntu-20.10-preinstalled-server-arm64+raspi.img of=/dev/rdisk3`
-* `diskutil eject /dev/disk3``
+* `diskutil eject /dev/disk3`
 * boot, ssh
 * update: `sudo apt update && sudo apt upgrade`
 
