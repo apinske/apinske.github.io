@@ -1,8 +1,11 @@
 # Ubuntu on Raspberry Pi
 
-* `brew cask install raspberry-pi-imager`
-* Ubuntu 20.04.1 LTS (64bit)
-* wait for auto-update to complete: `tail -f /var/log/unattended-upgrades/unattended-upgrades-dpkg.log`
+* `wget https://cdimage.ubuntu.com/releases/20.10/release/ubuntu-20.10-preinstalled-server-arm64+raspi.img.xz`
+* `xz -d ubuntu-20.10-preinstalled-server-arm64+raspi.img.xz`
+* `diskutil unmountDisk /dev/disk3`
+* `sudo dd bs=1m if=ubuntu-20.10-preinstalled-server-arm64+raspi.img of=/dev/rdisk3`
+* `diskutil eject /dev/disk3``
+* boot, ssh
 * update: `sudo apt update && sudo apt upgrade`
 
 ## .bashrc
