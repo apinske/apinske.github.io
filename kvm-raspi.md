@@ -21,12 +21,18 @@
     * `mkdir /media/vda`
     * `mount -a`
     * `setup-alpine`
+    * `mkdir /media/vda/docker`
+    * `ln -s /media/vda/docker /var/lib/docker`
     * uncomment community repo in `/etc/apk/repositories`
     * `apk update`
+    * `apk add e2fsprogs`
+    * `mkfs.ext4 /dev/vdb`
+    * `echo "/dev/vdb /var/lib/docker ext4 rw 0 0" >> /etc/fstab`
+    * `mkdir /var/lib/docker`
+    * `mount -a`
     * `apk add docker`
     * `rc-update add docker boot`
     * `service docker start`
-    * `lbu add /var/lib/docker`
     * `lbu commit`
 * [QEMU docs](https://www.qemu.org/docs/master/system/invocation.html)
 
