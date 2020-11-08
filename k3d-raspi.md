@@ -29,20 +29,6 @@
     * find image id
     * `k3d cluster create debug -a 1 -p 80:80@loadbalancer -i c4e1c8d53e11`
 
-## .bashrc
-```bash
-if command -v tmux &> /dev/null && [ -z "$TMUX" ]; then
-  tmux attach -t default || tmux new -s default
-fi
-```
-
-## .tmux.conf
-```
-set -g prefix C-a
-bind C-a send-prefix
-unbind C-b
-```
-
 ## hello-kubernetes.yaml
 ```yaml
 apiVersion: extensions/v1beta1
