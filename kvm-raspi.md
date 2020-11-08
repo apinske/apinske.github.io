@@ -21,6 +21,8 @@
     * `mkdir /media/vda1`
     * `mount -a`
     * `setup-alpine -e`
+    * add ssh-key `mkdir ~/.ssh && echo '...' > ~/.ssh/autorized_keys`
+* *optional:* setup docker
     * uncomment community repo in `/etc/apk/repositories`
     * `apk update`
     * `apk add e2fsprogs`
@@ -31,6 +33,15 @@
     * `apk add docker`
     * `rc-update add docker boot`
     * `service docker start`
+    * test: `docker run --rm -it alpine`
+* *optional:* setup k3d
+    * `wget -O /usr/local/bin/k3d https://github.com/rancher/k3d/releases/download/v3.2.0/k3d-linux-arm64`
+    * `chmod +x /usr/local/bin/k3d`
+    * *good idea?* `lbu add /usr/local/bin`
+    * `k3d cluster create raspi -a 1 -p 80:80@loadbalancer`
+    * remote `ssh root@alpine '/usr/local/bin/k3d kubeconfig get -a | sed -e "s/0.0.0.0/$(hostname)/"'`
+    * test: `kubectl --context k3d-raspi run -it alpine --image=alpine --rm`
+* save config
     * `lbu commit`
 * [QEMU docs](https://www.qemu.org/docs/master/system/invocation.html)
 
