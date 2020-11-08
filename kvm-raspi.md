@@ -10,6 +10,7 @@
     * reboot
     * `sudo ip tuntap add dev tap0 mode tap user ubuntu`
     * `sudo ip link set tap0 master br0`
+    * `sudo ip link set tap0 up`
 * install Alpine guest
     * `wget http://dl-cdn.alpinelinux.org/alpine/v3.12/releases/aarch64/alpine-virt-3.12.1-aarch64.iso`
     * `qemu-img create hd.raw 10G`
@@ -22,7 +23,7 @@
             -bios /usr/share/qemu-efi-aarch64/QEMU_EFI.fd \
             -blockdev driver=file,node-name=cd,filename=alpine-virt-3.12.1-aarch64.iso,read-only=on,force-share=on -device virtio-blk-device,drive=cd \
             -chardev stdio,id=screen,mux=on,signal=off -serial chardev:screen -monitor chardev:screen \
-            -netdev tap,id=net,ifname=tap0,script=no,downscript=no -device virtio-net-device,netdev=net \
+            -netdev tap,id=net,ifname=tap0,script=no,downscript=no -device virtio-net-device,netdev=net,mac=0A:00:00:00:00:01 \
             -blockdev driver=file,node-name=hd,filename=hd.raw -device virtio-blk-device,drive=hd
         ```
 
@@ -69,6 +70,7 @@ network:
             set-name: eth0
     bridges:
         br0:
+            macaddress: 02:00:00:00:00:01
             interfaces: [eth0]
             dhcp4: true
     version: 2
