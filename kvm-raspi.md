@@ -36,7 +36,7 @@
     * `lbu commit`
 * [QEMU docs](https://www.qemu.org/docs/master/system/invocation.html)
 
-# /etc/netplan/50-cloud-init.yaml
+## /etc/netplan/50-cloud-init.yaml
 ```yaml
 network:
     ethernets:
