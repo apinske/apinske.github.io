@@ -22,7 +22,7 @@
             -machine virt -cpu host -accel kvm -smp 2 -m 2G \
             -bios /usr/share/qemu-efi-aarch64/QEMU_EFI.fd \
             -blockdev driver=file,node-name=cd,filename=alpine-virt-3.12.1-aarch64.iso,read-only=on,force-share=on -device virtio-blk-device,drive=cd \
-            -chardev stdio,id=screen,mux=on,signal=off -serial chardev:screen -monitor chardev:screen \
+            -chardev stdio,id=screen,mux=on,signal=off -serial chardev:screen -mon screen \
             -netdev tap,id=net,ifname=tap0,script=no,downscript=no -device virtio-net-device,netdev=net,mac=0A:00:00:00:00:01 \
             -blockdev driver=file,node-name=hd,filename=hd.raw -device virtio-blk-device,drive=hd
         ```
