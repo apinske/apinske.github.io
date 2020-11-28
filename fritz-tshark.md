@@ -6,7 +6,7 @@ fritz_user=
 fritz_pwd=
 fritz_challenge=$(wget -qO- http://fritz.box/login_sid.lua | grep -o "<Challenge>[a-z0-9]\{8\}" | cut -d'>' -f2)
 fritz_hash=$(echo -n "$fritz_challenge-$fritz_pwd" | iconv -f UTF-8 -t UTF-16LE | md5sum | cut -d' ' -f1)
-fritz_sid=$(wget -qO- "http://fritz.box/login_sid.lua?user=${fritz_user}&response=$fritz_challenge-$fritz_hash" | grep -o "<SID>[a-z0-9]\{16\}" |  cut -d'>' -f2)
+fritz_sid=$(wget -qO- "http://fritz.box/login_sid.lua?user=$fritz_user&response=$fritz_challenge-$fritz_hash" | grep -o "<SID>[a-z0-9]\{16\}" |  cut -d'>' -f2)
 wget -qO- "http://fritz.box/cgi-bin/capture_notimeout?ifaceorminor=2-0&snaplen=&capture=Start&sid=$fritz_sid"
 ```
 
