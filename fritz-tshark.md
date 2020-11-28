@@ -1,4 +1,4 @@
-# Fr!tz Packet Capture
+# FRITZ!Box Packet Capture
 
 ## fritz.sh
 ```bash
