@@ -14,3 +14,6 @@ wget -qO- "http://fritz.box/cgi-bin/capture_notimeout?ifaceorminor=2-0&snaplen=&
 * `./fritz.sh | tshark -i- -l -Y 'dns && dns.flags.response==1' -e dns.qry.type -e dns.qry.name -e dns.a -e dns.aaaa -e dns.cname -T fields -E separator=';' > dns.log`
 * `./fritz.sh | tshark -i- -l -Y 'tcp and tcp.flags.syn == 1 and tcp.flags.ack == 0' -e ip.src -e tcp.srcport -e ip.dst -e tcp.dstport  -T fields -E separator=';'`
 * `./fritz.sh | tshark -i- -qz hosts`
+* YouTube
+    * `./fritz.sh | tshark -i- -l -t ad -e _ws.col.Time -e ip.src -e udp.srcport -e tcp.srcport -e ip.dst -e udp.dstport -e tcp.dstport -e tcp.stream -e udp.stream -Y 'ip.src==192.168.100.22' -T fields -E separator=';' -Q | awk -F';' -v OFS=';' '{ $1=substr($1,12,5); print $0 >> $1}'`
+    * `watch 'cat ??:?? | sort | uniq -c'`
