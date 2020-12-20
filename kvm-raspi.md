@@ -16,7 +16,7 @@
     * `qemu-img create hd.raw 10G`
     * run
 
-        ```
+        ```sh
         qemu-system-aarch64 \
             -nodefaults -nographic \
             -machine virt -cpu host -accel kvm -smp 2 -m 2G \
