@@ -1,8 +1,7 @@
 # podman on macOS
-* on macOS, start VM
-  * `curl --output virt.tar.gz https://github.com/apinske/simpleos/releases/download/v0.2/virt_$(uname -m).tar.gz`
-  * `tar xf virt.tar.gz`
-  * `./virt`
+* on macOS
+  * get VM: `curl --output virt.tar.gz https://github.com/apinske/simpleos/releases/download/v0.2/virt_$(uname -m).tar.gz && tar xf virt.tar.gz`
+  * run VM: `./virt`
 * in VM
   * `./setup-podman.sh` (1st time: install and reboot VM)
   * `./setup-podman.sh` (2nd time: print setup for macOS, e.g. `export CONTAINER_HOST=tcp://192.168.64.7:58080`)
