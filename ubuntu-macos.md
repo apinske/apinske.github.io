@@ -11,18 +11,19 @@
     * `tar xf cloudimg.tar.gz groovy-server-cloudimg-arm64.img`
     * `mv groovy-server-cloudimg-arm64.img vda.img`
     * `dd if=/dev/zero bs=1m count=9000 >> vda.img`
-  * on another Ubuntu
-    * apt install cloud-image-utils
-    * cloud-localds -H ubuntu cloud-init.img cloud-init-user-data
-  * on macOS
-    * cloud-init.img
-    * `./virtual run -k vmlinuz -r initrd -d vda.img -d cloud-init.img -c 'console=hvc0 root=/dev/vda' -p 2 -m 2048 --network`
+    * `mkdir cidata`
+    * `echo '{"instance-id":"iid-local01","local-hostname":"ubuntu"'} > cidata/meta-data`
+    * `echo -e '#cloud-config\npassword: ubuntu\nchpasswd: { expire: False }\nssh_pwauth: True' > cidata/user-data`
+    * `hdiutil makehybrid -o cloud-init cidata -iso -joliet`
+    * `rm -rf cidata`
+    * `./virtual run -k vmlinuz -r initrd -d vda.img -d cloud-init.iso -c 'console=hvc0 root=/dev/vda' -p 2 -m 2048 --network`
   * in Ubuntu VM
     * login with ubuntu/ubuntu
     * `sudo touch /etc/cloud/cloud-init.disabled`
     * `sudo poweroff`
   * on macOS
-    * `rm cloud-init.img`
+    * `reset`
+    * `rm cloud-init.iso`
 * use VM
   * `./virtual run -k vmlinuz -r initrd -d vda.img -c 'console=hvc0 root=/dev/vda' -p 2 -m 2048 --network`
 
