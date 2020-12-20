@@ -15,7 +15,7 @@
   * `echo -e '#cloud-config\npassword: ubuntu\nchpasswd: { expire: False }\nssh_pwauth: True' > cidata/user-data`
   * `hdiutil makehybrid -o cloud-init cidata -iso -joliet`
   * `rm -rf cidata`
-  * `./virtual run -k vmlinuz -r initrd -d vda.img -d cloud-init.iso -c 'console=hvc0 root=/dev/vda' -p 2 -m 2048 --network`
+  * `./virtual run -k vmlinuz -r initrd -d vda.img -d cloud-init.iso -c 'console=hvc0 root=/dev/vda' -p 2 -m 2048 -n -a 0a:00:00:00:00:03`
 * prepare VM, in Ubuntu
   * login with ubuntu/ubuntu
   * `sudo touch /etc/cloud/cloud-init.disabled`
@@ -24,12 +24,4 @@
   * `reset`
   * `rm cloud-init.iso`
 * use VM
-  * `./virtual run -k vmlinuz -r initrd -d vda.img -c 'console=hvc0 root=/dev/vda' -p 2 -m 2048 --network`
-
-## cloud-init-user-data
-```
-#cloud-config
-password: ubuntu
-chpasswd: { expire: False }
-ssh_pwauth: True
-```
+  * `./virtual run -k vmlinuz -r initrd -d vda.img -c 'console=hvc0 root=/dev/vda' -p 2 -m 2048 -n -a 0a:00:00:00:00:03`
