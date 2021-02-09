@@ -2,8 +2,8 @@
 * [OCP on AWS](ocp-aws.md)
 * Raspberry Pi
   * [Ubuntu on Raspberry Pi](ubuntu-raspi.md)
-  * [k3d on Raspberry Pi](k3d-raspi.md)
   * [KVM on ARM64 (Raspberry Pi 4)](kvm-raspi.md)
+  * [k3d on Raspberry Pi](k3d-raspi.md)
 * macOS
   * [Ubuntu on macOS](ubuntu-macos.md)
   * [podman on macOS](podman-macos.md)
