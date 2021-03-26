@@ -11,4 +11,6 @@
 ## CRC
 * `wget https://mirror.openshift.com/pub/openshift-v4/clients/crc/latest/crc-linux-amd64.tar.xz`
 * `mkdir -p .local/bin && tar --strip-components=1 -C .local/bin -xf crc-linux-amd64.tar.xz '*crc'`
-* `crc version`
+* `crc config set memory 32768`
+* `crc config set disk-size 256`
+* `crc config set network-mode vsock` ?
