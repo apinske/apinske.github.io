@@ -17,3 +17,4 @@
 * `crc setup`
 * `sudo sh -c 'cat /root/resolv.conf >> /etc/resolv.conf'`
 * `crc start`
+* `ssh -i ~/.crc/machines/crc/id_ecdsa core@$(crc ip)`
