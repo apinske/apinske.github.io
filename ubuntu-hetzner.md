@@ -11,10 +11,14 @@
 * `chown -R apinske:users /home/apinske/.ssh`
 * `echo "apinske ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/apinske`
 * `cp /run/systemd/resolve/resolv.conf /root/resolv.conf` (Backup)
+* edit netplan
+* `netplan try`
 
 ## KVM
 * `sudo apt install qemu-system-x86`
-* ``
+* `sudo ip tuntap add dev tap0 mode tap user apinske`
+* `sudo ip link set tap0 master br0`
+* `sudo ip link set tap0 up`
 
 ## CRC
 * `wget https://mirror.openshift.com/pub/openshift-v4/clients/crc/latest/crc-linux-amd64.tar.xz`
@@ -41,13 +45,14 @@ bind C-a send-prefix
 unbind C-b
 ```
 
-## /etc/netplan/02-kvm.yaml
-```yaml
-network:
-    bridges:
-        br0:
-            macaddress: 02:00:00:00:00:01
-            interfaces: [enp0s31f6]
-            dhcp4: true
-    version: 2
+## /etc/netplan/01-netcfg.yaml
+```diff
+    ethernets:
+      enp0s31f6: 
++       dhcp4: false
++       dhcp6: false
++   bridges:
++     br0:
++       interfaces: [enp0s31f6]
+        addresses:
 ```
