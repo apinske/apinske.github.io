@@ -19,25 +19,14 @@
 * `sudo ip link set tap0 master br0`
 * `sudo ip link set tap0 up`
 
-## Alpine
-* `wget https://dl-cdn.alpinelinux.org/alpine/v3.13/releases/x86_64/alpine-virt-3.13.3-x86_64.iso`
-* `qemu-img create hd.raw 10G`
-* run
-    ```sh
-    qemu-system-x86_64 \
-        -nodefaults -nographic \
-        -machine ubuntu -cpu host -accel kvm -smp 2 -m 16G \
-        -blockdev driver=file,node-name=cd,filename=alpine-virt-3.13.3-x86_64.iso,read-only=on,force-share=on -device virtio-blk,drive=cd \
-        -chardev stdio,id=screen,mux=on,signal=off -serial chardev:screen -mon screen \
-        -netdev tap,id=net,ifname=tap0,script=no,downscript=no -device virtio-net,netdev=net \
-        -blockdev driver=file,node-name=hd,filename=hd.raw -device virtio-blk,drive=hd
-    ```
-
-## Ubuntu
+## Ubuntu VM
 *  `wget -O- https://cloud-images.ubuntu.com/groovy/current/groovy-server-cloudimg-amd64.tar.gz | tar xzf - groovy-server-cloudimg-amd64.img`
 *  `wget -O initrd https://cloud-images.ubuntu.com/groovy/current/unpacked/groovy-server-cloudimg-amd64-initrd-generic`
 *  `wget -O vmlinuz https://cloud-images.ubuntu.com/groovy/current/unpacked/groovy-server-cloudimg-amd64-vmlinuz-generic`
 *  `cp groovy-server-cloudimg-amd64.img hd.raw`
+*  cidata
+    * user-data, meta-data, network-config
+    * `genisoimage -output cidata.iso -volid cidata -joliet -rock cidata/`
 *  run
     ```sh
     qemu-system-x86_64 \
@@ -46,6 +35,7 @@
         -chardev stdio,id=screen,mux=on,signal=off -serial chardev:screen -mon screen \
         -netdev tap,id=net,ifname=tap0,script=no,downscript=no -device virtio-net,netdev=net \
         -blockdev driver=file,node-name=hd,filename=hd.raw -device virtio-blk,drive=hd \
+        -blockdev driver=file,node-name=cd,filename=cidata.iso -device virtio-blk,drive=cd \
         -kernel vmlinuz -initrd initrd -append "console=ttyS0 root=/dev/vda"
     ```
 
@@ -84,15 +74,4 @@ unbind C-b
 +     br0:
 +       interfaces: [enp0s31f6]
         addresses:
-```
-
-## /etc/network/interfaces
-```
-auto lo
-iface lo inet loopback
-
-auto eth0
-iface eth0 inet6 static
-        address <IPv6>/64
-        gateway fe80::1
 ```
