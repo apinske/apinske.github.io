@@ -33,6 +33,22 @@
         -blockdev driver=file,node-name=hd,filename=hd.raw -device virtio-blk,drive=hd
     ```
 
+## Ubuntu
+*  `wget -O- https://cloud-images.ubuntu.com/groovy/current/groovy-server-cloudimg-amd64.tar.gz | tar xzf - groovy-server-cloudimg-amd64.img`
+*  `wget -O initrd https://cloud-images.ubuntu.com/groovy/current/unpacked/groovy-server-cloudimg-amd64-initrd-generic`
+*  `wget -O vmlinuz https://cloud-images.ubuntu.com/groovy/current/unpacked/groovy-server-cloudimg-amd64-vmlinuz-generic`
+*  `cp groovy-server-cloudimg-amd64.img hd.raw`
+*  run
+    ```sh
+    qemu-system-x86_64 \
+        -nodefaults -nographic \
+        -machine ubuntu -cpu host -accel kvm -smp 2 -m 16G \
+        -chardev stdio,id=screen,mux=on,signal=off -serial chardev:screen -mon screen \
+        -netdev tap,id=net,ifname=tap0,script=no,downscript=no -device virtio-net,netdev=net \
+        -blockdev driver=file,node-name=hd,filename=hd.raw -device virtio-blk,drive=hd \
+        -kernel vmlinuz -initrd initrd -append "console=ttyS0 root=/dev/vda"
+    ```
+
 ## CRC
 * `wget https://mirror.openshift.com/pub/openshift-v4/clients/crc/latest/crc-linux-amd64.tar.xz`
 * `mkdir -p .local/bin && tar --strip-components=1 -C .local/bin -xf crc-linux-amd64.tar.xz '*crc'`
