@@ -10,11 +10,10 @@
 * `cp -R /root/.ssh /home/apinske/`
 * `chown -R apinske:users /home/apinske/.ssh`
 * `echo "apinske ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/apinske`
-* `cp /run/systemd/resolve/resolv.conf /root/resolv.conf` (Backup)
-* edit netplan
-* `netplan try`
 
 ## KVM
+* edit netplan
+* `sudo netplan try`
 * `sudo apt install qemu-system-x86`
 * `sudo ip tuntap add dev tap0 mode tap user apinske`
 * `sudo ip link set tap0 master br0`
