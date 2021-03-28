@@ -14,7 +14,7 @@
 ## KVM
 * edit netplan
 * `sudo netplan try`
-* `sudo apt install qemu-system-x86`
+* `sudo apt install qemu-system-x86 genisoimage`
 * `sudo ip tuntap add dev tap0 mode tap user apinske`
 * `sudo ip link set tap0 master br0`
 * `sudo ip link set tap0 up`
