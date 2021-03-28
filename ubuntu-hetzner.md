@@ -19,6 +19,20 @@
 * `sudo ip link set tap0 master br0`
 * `sudo ip link set tap0 up`
 
+## Alpine
+* `wget https://dl-cdn.alpinelinux.org/alpine/v3.13/releases/x86_64/alpine-virt-3.13.3-x86_64.iso`
+* `qemu-img create hd.raw 10G`
+* run
+    ```sh
+    qemu-system-x86_64 \
+        -nodefaults -nographic \
+        -machine pc -cpu host -accel kvm -smp 2 -m 16G \
+        -blockdev driver=file,node-name=cd,filename=alpine-virt-3.13.3-aarch64.iso,read-only=on,force-share=on -device virtio-blk,drive=cd \
+        -chardev stdio,id=screen,mux=on,signal=off -serial chardev:screen -mon screen \
+        -netdev tap,id=net,ifname=tap0,script=no,downscript=no -device virtio-net,netdev=net \
+        -blockdev driver=file,node-name=hd,filename=hd.raw -device virtio-blk,drive=hd
+    ```
+
 ## CRC
 * `wget https://mirror.openshift.com/pub/openshift-v4/clients/crc/latest/crc-linux-amd64.tar.xz`
 * `mkdir -p .local/bin && tar --strip-components=1 -C .local/bin -xf crc-linux-amd64.tar.xz '*crc'`
@@ -54,4 +68,15 @@ unbind C-b
 +     br0:
 +       interfaces: [enp0s31f6]
         addresses:
+```
+
+## /etc/network/interfaces
+```
+auto lo
+iface lo inet loopback
+
+auto eth0
+iface eth0 inet6 static
+        address .../64
+        gateway fe80::1
 ```
