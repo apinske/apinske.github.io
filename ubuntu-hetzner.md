@@ -24,6 +24,7 @@
 *  `wget -O initrd https://cloud-images.ubuntu.com/groovy/current/unpacked/groovy-server-cloudimg-amd64-initrd-generic`
 *  `wget -O vmlinuz https://cloud-images.ubuntu.com/groovy/current/unpacked/groovy-server-cloudimg-amd64-vmlinuz-generic`
 *  `cp groovy-server-cloudimg-amd64.img hd.raw`
+*  `dd if=/dev/zero bs=1M count=9000 >> hd.raw`
 *  cidata
     * user-data, meta-data, network-config
     * `genisoimage -output cidata.iso -volid cidata -joliet -rock cidata/`
