@@ -26,8 +26,8 @@
     ```sh
     qemu-system-x86_64 \
         -nodefaults -nographic \
-        -machine pc -cpu host -accel kvm -smp 2 -m 16G \
-        -blockdev driver=file,node-name=cd,filename=alpine-virt-3.13.3-aarch64.iso,read-only=on,force-share=on -device virtio-blk,drive=cd \
+        -machine ubuntu -cpu host -accel kvm -smp 2 -m 16G \
+        -blockdev driver=file,node-name=cd,filename=alpine-virt-3.13.3-x86_64.iso,read-only=on,force-share=on -device virtio-blk,drive=cd \
         -chardev stdio,id=screen,mux=on,signal=off -serial chardev:screen -mon screen \
         -netdev tap,id=net,ifname=tap0,script=no,downscript=no -device virtio-net,netdev=net \
         -blockdev driver=file,node-name=hd,filename=hd.raw -device virtio-blk,drive=hd
@@ -77,6 +77,6 @@ iface lo inet loopback
 
 auto eth0
 iface eth0 inet6 static
-        address .../64
+        address <IPv6>/64
         gateway fe80::1
 ```
