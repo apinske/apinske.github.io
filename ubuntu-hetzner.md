@@ -43,6 +43,20 @@
         -kernel vmlinuz -initrd initrd -append "console=ttyS0 root=/dev/vda"
     ```
 
+## Alpine VM
+* `wget https://dl-cdn.alpinelinux.org/alpine/v3.14/releases/x86_64/alpine-virt-3.14.2-x86_64.iso`
+* ...
+*  run
+    ```sh
+    qemu-system-x86_64 \
+        -nodefaults -nographic \
+        -machine ubuntu -cpu host -accel kvm -smp 2 -m 8G \
+        -blockdev driver=file,node-name=cd,filename=alpine-virt-3.14.2-x86_64.iso,read-only=on,force-share=on -device virtio-blk,drive=cd \
+        -chardev stdio,id=screen,mux=on,signal=off -serial chardev:screen -mon screen \
+        -netdev tap,id=net,ifname=tap1,script=no,downscript=no -device virtio-net,netdev=net \
+        -blockdev driver=file,node-name=hd,filename=hd.raw -device virtio-blk,drive=hd
+    ```
+
 ## .bashrc
 ```bash
 alias env_sshauth='export SSH_AUTH_SOCK="$(tmux show-env | sed -n 's/^SSH_AUTH_SOCK=//p')"'
@@ -70,13 +84,13 @@ unbind C-b
         addresses:
 ```
 
-## meta-data
+## ci-data/meta-data
 ```
 instance-id: iid-local01
 local-hostname: ubuntu1
 ```
 
-### user-data
+### ci-data/user-data
 ```
 #cloud-config
 password: ...
@@ -86,7 +100,7 @@ ssh_authorized_keys:
   - ssh-rsa ...
 ```
 
-## network-config
+## ci-data/network-config
 ```yaml
 version: 2
 ethernets:
