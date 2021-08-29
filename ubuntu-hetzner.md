@@ -10,6 +10,7 @@
 * `cp -R /root/.ssh /home/apinske/`
 * `chown -R apinske:users /home/apinske/.ssh`
 * `echo "apinske ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/apinske`
+* `/etc/sysctl.conf`: `sysctl -w net.ipv6.conf.all.forwarding=1`
 
 ## KVM
 * edit netplan
