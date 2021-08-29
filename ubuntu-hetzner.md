@@ -21,35 +21,27 @@
 * `sudo ip link set tap0 up`
 
 ## Ubuntu VM
-*  `wget -O- https://cloud-images.ubuntu.com/groovy/current/groovy-server-cloudimg-amd64.tar.gz | tar xzf - groovy-server-cloudimg-amd64.img`
-*  `wget -O initrd https://cloud-images.ubuntu.com/groovy/current/unpacked/groovy-server-cloudimg-amd64-initrd-generic`
-*  `wget -O vmlinuz https://cloud-images.ubuntu.com/groovy/current/unpacked/groovy-server-cloudimg-amd64-vmlinuz-generic`
-*  `cp groovy-server-cloudimg-amd64.img hd.raw`
+*  `wget -O- https://cloud-images.ubuntu.com/hirsute/current/hirsute-server-cloudimg-amd64.tar.gz | tar xzf - hirsute-server-cloudimg-amd64.img`
+*  `wget -O initrd https://cloud-images.ubuntu.com/hirsute/current/unpacked/hirsute-server-cloudimg-amd64-initrd-generic`
+*  `wget -O vmlinuz https://cloud-images.ubuntu.com/hirsute/current/unpacked/hirsute-server-cloudimg-amd64-vmlinuz-generic`
+*  `cp hirsute-server-cloudimg-amd64.img hd.raw`
 *  `dd if=/dev/zero bs=1M count=9000 >> hd.raw`
 *  cidata
     * user-data, meta-data, network-config
     * `genisoimage -output cidata.iso -volid cidata -joliet -rock cidata/`
+* `MACADDR="52:54:00:$(dd if=/dev/urandom bs=512 count=1 2>/dev/null | md5sum | sed 's/^\(..\)\(..\)\(..\).*$/\1:\2:\3/')"; echo $MACADDR`
 *  run
     ```sh
     qemu-system-x86_64 \
         -nodefaults -nographic \
         -machine ubuntu -cpu host -accel kvm -smp 2 -m 16G \
         -chardev stdio,id=screen,mux=on,signal=off -serial chardev:screen -mon screen \
-        -netdev tap,id=net,ifname=tap0,script=no,downscript=no -device virtio-net,netdev=net \
+        -netdev tap,id=net1,ifname=tap0,script=no,downscript=no -device virtio-net,netdev=net1,mac=<MACADDR> \
+        -netdev user,id=net2,ipv4=on -device virtio-net,netdev=net2,mac=02:00:00:00:00:a1 \
         -blockdev driver=file,node-name=hd,filename=hd.raw -device virtio-blk,drive=hd \
         -blockdev driver=file,node-name=cd,filename=cidata.iso -device virtio-blk,drive=cd \
         -kernel vmlinuz -initrd initrd -append "console=ttyS0 root=/dev/vda"
     ```
-
-## CRC
-* `wget https://mirror.openshift.com/pub/openshift-v4/clients/crc/latest/crc-linux-amd64.tar.xz`
-* `mkdir -p .local/bin && tar --strip-components=1 -C .local/bin -xf crc-linux-amd64.tar.xz '*crc'`
-* `crc config set memory 32768`
-* `crc config set disk-size 256`
-* `crc setup`
-* `sudo sh -c 'cat /root/resolv.conf >> /etc/resolv.conf'`
-* `crc start`
-* `ssh -i ~/.crc/machines/crc/id_ecdsa core@$(crc ip)`
 
 ## .bashrc
 ```bash
@@ -76,4 +68,38 @@ unbind C-b
 +     br0:
 +       interfaces: [enp0s31f6]
         addresses:
+```
+
+## meta-data
+```
+instance-id: iid-local01
+local-hostname: ubuntu1
+```
+
+### user-data
+```
+#cloud-config
+password: ...
+chpasswd: { expire: False }
+ssh_pwauth: False
+ssh_authorized_keys:
+  - ssh-rsa ...
+```
+
+## network-config
+```yaml
+version: 2
+ethernets:
+  ens2:
+    addresses:
+      - 2a01:4f8:171:334c::a1/64
+    gateway6: fe80::1
+    nameservers:
+      addresses:
+          - 2a01:4f8:0:1::add:9898
+          - 2a01:4f8:0:1::add:9999
+          - 2a01:4f8:0:1::add:1010
+  ens3:
+    dhcp4: true
+    link-local: []
 ```
