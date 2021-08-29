@@ -45,13 +45,24 @@
 
 ## Alpine VM
 * `wget https://dl-cdn.alpinelinux.org/alpine/v3.14/releases/x86_64/alpine-virt-3.14.2-x86_64.iso`
-* ...
 *  run
     ```sh
     qemu-system-x86_64 \
         -nodefaults -nographic \
         -machine ubuntu -cpu host -accel kvm -smp 2 -m 8G \
         -blockdev driver=file,node-name=cd,filename=alpine-virt-3.14.2-x86_64.iso,read-only=on,force-share=on -device virtio-blk,drive=cd \
+        -chardev stdio,id=screen,mux=on,signal=off -serial chardev:screen -mon screen \
+        -netdev tap,id=net,ifname=tap1,script=no,downscript=no -device virtio-net,netdev=net \
+        -blockdev driver=file,node-name=hd,filename=hd.raw -device virtio-blk,drive=hd
+    ```
+* ...
+* `wget https://raw.githubusercontent.com/alpinelinux/alpine-make-vm-image/v0.7.0/alpine-make-vm-image`
+* `sudo ./alpine-make-vm-image -f raw hd.raw`
+*  run
+    ```sh
+    qemu-system-x86_64 \
+        -nodefaults -nographic \
+        -machine ubuntu -cpu host -accel kvm -smp 2 -m 8G \
         -chardev stdio,id=screen,mux=on,signal=off -serial chardev:screen -mon screen \
         -netdev tap,id=net,ifname=tap1,script=no,downscript=no -device virtio-net,netdev=net \
         -blockdev driver=file,node-name=hd,filename=hd.raw -device virtio-blk,drive=hd
