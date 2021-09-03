@@ -11,6 +11,7 @@
 * `chown -R apinske:users /home/apinske/.ssh`
 * `echo "apinske ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/apinske`
 * `/etc/sysctl.conf`: `sysctl -w net.ipv6.conf.all.forwarding=1`
+* `ebtables -t nat -A POSTROUTING -j snat --to-src <MACADDR>`
 
 ## KVM
 * edit netplan
