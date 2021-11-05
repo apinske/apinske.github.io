@@ -22,11 +22,11 @@
 * `sudo ip link set tap0 up`
 
 ## Ubuntu VM
-*  `wget -O- https://cloud-images.ubuntu.com/hirsute/current/hirsute-server-cloudimg-amd64.tar.gz | tar xzf - hirsute-server-cloudimg-amd64.img`
-*  `wget -O initrd https://cloud-images.ubuntu.com/hirsute/current/unpacked/hirsute-server-cloudimg-amd64-initrd-generic`
-*  `wget -O vmlinuz https://cloud-images.ubuntu.com/hirsute/current/unpacked/hirsute-server-cloudimg-amd64-vmlinuz-generic`
-*  `cp hirsute-server-cloudimg-amd64.img hd.raw`
-*  `dd if=/dev/zero bs=1M count=9000 >> hd.raw`
+*  `wget -O- https://cloud-images.ubuntu.com/impish/current/impish-server-cloudimg-amd64.tar.gz | tar xzf - impish-server-cloudimg-amd64.img`
+*  `wget -O initrd https://cloud-images.ubuntu.com/impish/current/unpacked/impish-server-cloudimg-amd64-initrd-generic`
+*  `wget -O vmlinuz https://cloud-images.ubuntu.com/impish/current/unpacked/impish-server-cloudimg-amd64-vmlinuz-generic`
+*  `cp impish-server-cloudimg-amd64.img hd.raw`
+*  `dd if=/dev/zero bs=1M count=49000 >> hd.raw`
 *  cidata
     * user-data, meta-data, network-config
     * `genisoimage -output cidata.iso -volid cidata -joliet -rock cidata/`
