@@ -1,20 +1,41 @@
-Dear recruiter,
+# Things I ...
+## have
+* solid and broad knowledge of IT fundamentals
 
-if you want to get in touch, please provide at least the following details in your first message:
-* what are the responsibilities of the position
-* how does that fit in with (and what is) the overall goal
-* name of the company (and unit)
-* used technologies
+## can do
+* build great software
+* Java, JavaEE, Spring, Hibernate, transactions, RDBMS, ...
+* architecture, dev lead
+* insurance/banking processes
 
-Keep the usual hollow words (agil, best employer, attractive, ...) and provide details. How else am I going to be interested?
+## like
+* problem solving
+* learning new things
+* coaching
 
-I want to:
-* build great software with a great team towards a great goal
-* solve problems
-* learn new things
-* coach others
+## want
+* great team
+* great goal
 
-I do not want:
-* SAP, Salesforce or other proprietary app platforms
-* technology for the sake of technology
+## would like to do
+* C
+* Kernel, Hypervisor, ...
+
+## don't want to do
+* C++, Go
+* Cloud
+
+## don't do
 * military
+* proprietary platforms (SAP, Salesforce, ...)
+* technology for the sake of technology
+
+# Dear recruiter,
+
+if you want to get in touch, please provide at least the following details in your first message.
+* What are the responsibilities of the position?
+* How does that fit in with (and what is) the overall goal?
+* What is the company's name (and unit's)?
+* What technologies are used?
+
+Keep the usual hollow words (agil, best employer, attractive, ...) and provide details.
