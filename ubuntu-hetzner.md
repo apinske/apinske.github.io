@@ -22,52 +22,67 @@
 * `sudo ip link set tap0 up`
 
 ## Ubuntu VM
-*  `wget -O- https://cloud-images.ubuntu.com/impish/current/impish-server-cloudimg-amd64.tar.gz | tar xzf - impish-server-cloudimg-amd64.img`
-*  `wget -O initrd https://cloud-images.ubuntu.com/impish/current/unpacked/impish-server-cloudimg-amd64-initrd-generic`
-*  `wget -O vmlinuz https://cloud-images.ubuntu.com/impish/current/unpacked/impish-server-cloudimg-amd64-vmlinuz-generic`
-*  `cp impish-server-cloudimg-amd64.img hd.raw`
-*  `dd if=/dev/zero bs=1M count=49000 >> hd.raw`
-*  cidata
-    * user-data, meta-data, network-config
-    * `genisoimage -output cidata.iso -volid cidata -joliet -rock cidata/`
-* `MACADDR="52:54:00:$(dd if=/dev/urandom bs=512 count=1 2>/dev/null | md5sum | sed 's/^\(..\)\(..\)\(..\).*$/\1:\2:\3/')"; echo $MACADDR`
-*  run
-    ```sh
-    qemu-system-x86_64 \
-        -nodefaults -nographic \
-        -machine ubuntu -cpu host -accel kvm -smp 2 -m 16G \
-        -chardev stdio,id=screen,mux=on,signal=off -serial chardev:screen -mon screen \
-        -netdev tap,id=net1,ifname=tap0,script=no,downscript=no -device virtio-net,netdev=net1,mac=<MACADDR> \
-        -netdev user,id=net2,ipv4=on -device virtio-net,netdev=net2,mac=02:00:00:00:00:a1 \
-        -blockdev driver=file,node-name=hd,filename=hd.raw -device virtio-blk,drive=hd \
-        -blockdev driver=file,node-name=cd,filename=cidata.iso -device virtio-blk,drive=cd \
-        -kernel vmlinuz -initrd initrd -append "console=ttyS0 root=/dev/vda"
-    ```
+```sh
+#!/bin/sh                           
+if [ ! -f vdax.img ]; then
+  wget -O- https://cloud-images.ubuntu.com/jammy/current/jammy-server-cloudimg-amd64.tar.gz | tar xzf - jammy-server-cloudimg-amd64.img
+  wget -O initrd https://cloud-images.ubuntu.com/jammy/current/unpacked/jammy-server-cloudimg-amd64-initrd-generic
+  wget -O vmlinuz https://cloud-images.ubuntu.com/jammy/current/unpacked/jammy-server-cloudimg-amd64-vmlinuz-generic
+                                                   
+  VM_NAME=$(basename $PWD)
+  VM_NO=$(echo $VM_NAME | tr -cd '[:digit:]')
+  mkdir cidata  
+  cat << EOF > cidata/user-data   
+#cloud-config                     
+password: ubuntu                  
+chpasswd:
+  expire: False
+ssh_pwauth: False 
+ssh_authorized_keys:
+  - $(cat ~/.ssh/authorized_keys)                                                                     
+EOF            
+  cat << EOF > cidata/meta-data
+instance-id: iid-local-$VM_NAME             
+local-hostname: $VM_NAME 
+EOF
+  cat << EOF > cidata/network-config                                                                                                                                                                        
+version: 2           
+ethernets:
+  ens2:              
+    addresses:               
+      - 2a01:4f8:171:334c::a$VM_NO/64                                                                 
+    gateway6: fe80::1                                                                                 
+    nameservers:                                                                                                                                                                                            
+      addresses:                                                                                      
+          - 2a01:4f8:0:1::add:9898                                                                    
+          - 2a01:4f8:0:1::add:9999                                                                    
+          - 2a01:4f8:0:1::add:1010                                                                    
+  ens3:
+    dhcp4: true
+    link-local: []
+EOF
+  genisoimage -output cidata.iso -volid cidata -joliet -rock cidata/
+  rm -rf cidata
 
-## Alpine VM
-* `wget https://dl-cdn.alpinelinux.org/alpine/v3.14/releases/x86_64/alpine-virt-3.14.2-x86_64.iso`
-*  run
-    ```sh
-    qemu-system-x86_64 \
-        -nodefaults -nographic \
-        -machine ubuntu -cpu host -accel kvm -smp 2 -m 8G \
-        -blockdev driver=file,node-name=cd,filename=alpine-virt-3.14.2-x86_64.iso,read-only=on,force-share=on -device virtio-blk,drive=cd \
-        -chardev stdio,id=screen,mux=on,signal=off -serial chardev:screen -mon screen \
-        -netdev tap,id=net,ifname=tap1,script=no,downscript=no -device virtio-net,netdev=net \
-        -blockdev driver=file,node-name=hd,filename=hd.raw -device virtio-blk,drive=hd
-    ```
-* ...
-* `wget https://raw.githubusercontent.com/alpinelinux/alpine-make-vm-image/v0.7.0/alpine-make-vm-image`
-* `sudo ./alpine-make-vm-image -f raw hd.raw`
-*  run
-    ```sh
-    qemu-system-x86_64 \
-        -nodefaults -nographic \
-        -machine ubuntu -cpu host -accel kvm -smp 2 -m 8G \
-        -chardev stdio,id=screen,mux=on,signal=off -serial chardev:screen -mon screen \
-        -netdev tap,id=net,ifname=tap1,script=no,downscript=no -device virtio-net,netdev=net \
-        -blockdev driver=file,node-name=hd,filename=hd.raw -device virtio-blk,drive=hd
-    ```
+  mv jammy-server-cloudimg-amd64.img vda.img
+  truncate -s 10G vda.img
+
+  MACADDR="52:54:00:$(dd if=/dev/urandom bs=512 count=1 2>/dev/null | md5sum | sed 's/^\(..\)\(..\)\(..\).*$/\1:\2:\3/')"
+  cat << EOF > run.sh
+#!/bin/sh
+qemu-system-x86_64 \\
+    -nodefaults -nographic \\
+    -machine ubuntu -cpu host -accel kvm -smp 2 -m 16G \\
+    -chardev stdio,id=screen,mux=on,signal=off -serial chardev:screen -mon screen \\
+    -netdev tap,id=net1,ifname=tap$((VM_NO-1)),script=no,downscript=no -device virtio-net,netdev=net1,mac=$MACADDR \\
+    -netdev user,id=net2,ipv4=on -device virtio-net,netdev=net2,mac=02:00:00:00:00:f$VM_NO \\
+    -blockdev driver=file,node-name=hd,filename=vda.img -device virtio-blk,drive=hd \\
+    -blockdev driver=file,node-name=cd,filename=cidata.iso -device virtio-blk,drive=cd \\
+    -kernel vmlinuz -initrd initrd -append "console=ttyS0 root=/dev/vda"
+EOF
+  chmod +x run.sh
+fi
+```
 
 ## .bashrc
 ```bash
@@ -94,38 +109,4 @@ unbind C-b
 +     br0:
 +       interfaces: [enp0s31f6]
         addresses:
-```
-
-## ci-data/meta-data
-```
-instance-id: iid-local01
-local-hostname: ubuntu1
-```
-
-### ci-data/user-data
-```
-#cloud-config
-password: ...
-chpasswd: { expire: False }
-ssh_pwauth: False
-ssh_authorized_keys:
-  - ssh-rsa ...
-```
-
-## ci-data/network-config
-```yaml
-version: 2
-ethernets:
-  ens2:
-    addresses:
-      - 2a01:4f8:171:334c::a1/64
-    gateway6: fe80::1
-    nameservers:
-      addresses:
-          - 2a01:4f8:0:1::add:9898
-          - 2a01:4f8:0:1::add:9999
-          - 2a01:4f8:0:1::add:1010
-  ens3:
-    dhcp4: true
-    link-local: []
 ```
