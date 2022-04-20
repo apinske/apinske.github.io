@@ -24,7 +24,7 @@
 ## Ubuntu VM
 ```sh
 #!/bin/sh                           
-if [ ! -f vdax.img ]; then
+if [ ! -f vda.img ]; then
   wget -O- https://cloud-images.ubuntu.com/jammy/current/jammy-server-cloudimg-amd64.tar.gz | tar xzf - jammy-server-cloudimg-amd64.img
   wget -O initrd https://cloud-images.ubuntu.com/jammy/current/unpacked/jammy-server-cloudimg-amd64-initrd-generic
   wget -O vmlinuz https://cloud-images.ubuntu.com/jammy/current/unpacked/jammy-server-cloudimg-amd64-vmlinuz-generic
