@@ -4,7 +4,6 @@
 
 ## Setup
 * update: `apt update && apt upgrade`
-* `apt install tmux`
 * `adduser apinske --disabled-password --gecos "" --ingroup users`
 * `adduser apinske kvm`
 * `cp -R /root/.ssh /home/apinske/`
@@ -17,9 +16,9 @@
 * edit netplan
 * `sudo netplan try`
 * `sudo apt install qemu-system-x86 genisoimage`
-* `sudo ip tuntap add dev tap0 mode tap user apinske`
-* `sudo ip link set tap0 master br0`
-* `sudo ip link set tap0 up`
+* `sudo ip tuntap add dev tapX mode tap user apinske`
+* `sudo ip link set tapX master br0`
+* `sudo ip link set tapX up`
 
 ## Ubuntu VM
 ```sh
@@ -74,7 +73,7 @@ qemu-system-x86_64 \\
     -nodefaults -nographic \\
     -machine ubuntu -cpu host -accel kvm -smp 2 -m 16G \\
     -chardev stdio,id=screen,mux=on,signal=off -serial chardev:screen -mon screen \\
-    -netdev tap,id=net1,ifname=tap$((VM_NO-1)),script=no,downscript=no -device virtio-net,netdev=net1,mac=$MACADDR \\
+    -netdev tap,id=net1,ifname=tap$VM_NO,script=no,downscript=no -device virtio-net,netdev=net1,mac=$MACADDR \\
     -netdev user,id=net2,ipv4=on -device virtio-net,netdev=net2,mac=02:00:00:00:00:f$VM_NO \\
     -blockdev driver=file,node-name=hd,filename=vda.img -device virtio-blk,drive=hd \\
     -blockdev driver=file,node-name=cd,filename=cidata.iso -device virtio-blk,drive=cd \\
