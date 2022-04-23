@@ -1,9 +1,8 @@
 # Ubuntu on Raspberry Pi
 
-* `wget https://cdimage.ubuntu.com/releases/20.10/release/ubuntu-20.10-preinstalled-server-arm64+raspi.img.xz`
-* `xz -d ubuntu-20.10-preinstalled-server-arm64+raspi.img.xz`
+* `curl https://cdimage.ubuntu.com/releases/22.04/release/ubuntu-22.04-preinstalled-server-arm64+raspi.img.xz | xz -d - > sd.img`
 * `diskutil unmountDisk /dev/disk3`
-* `sudo dd bs=1m if=ubuntu-20.10-preinstalled-server-arm64+raspi.img of=/dev/rdisk3`
+* `sudo dd bs=1m if=sd.img of=/dev/rdisk3`
 * `diskutil eject /dev/disk3`
 * boot, ssh
 * update: `sudo apt update && sudo apt upgrade`
