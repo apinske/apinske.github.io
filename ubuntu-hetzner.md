@@ -39,7 +39,7 @@ chpasswd:
 ssh_pwauth: False 
 ssh_authorized_keys:
   - $(cat ~/.ssh/authorized_keys)                                                                     
-EOF            
+EOF
   cat << EOF > cidata/meta-data
 instance-id: iid-local-$VM_NAME             
 local-hostname: $VM_NAME 
