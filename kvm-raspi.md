@@ -7,7 +7,7 @@
     * re-login
 * install Alpine guest
     * `wget https://dl-cdn.alpinelinux.org/alpine/v3.15/releases/aarch64/alpine-virt-3.15.4-aarch64.iso`
-    * `qemu-img create hd.raw 10G`
+    * `truncate -s 10G hd.raw`
     * run
 
         ```sh
