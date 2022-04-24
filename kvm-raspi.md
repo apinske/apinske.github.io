@@ -5,14 +5,8 @@
     * `sudo apt install qemu-system-arm qemu-efi-aarch64`
     * `sudo adduser ubuntu kvm`
     * re-login
-* setup bridge network
-    * edit netplan
-    * reboot
-    * `sudo ip tuntap add dev tap0 mode tap user ubuntu`
-    * `sudo ip link set tap0 master br0`
-    * `sudo ip link set tap0 up`
 * install Alpine guest
-    * `wget http://dl-cdn.alpinelinux.org/alpine/v3.12/releases/aarch64/alpine-virt-3.12.1-aarch64.iso`
+    * `wget https://dl-cdn.alpinelinux.org/alpine/v3.15/releases/aarch64/alpine-virt-3.15.4-aarch64.iso`
     * `qemu-img create hd.raw 10G`
     * run
 
@@ -21,9 +15,9 @@
             -nodefaults -nographic \
             -machine virt -cpu host -accel kvm -smp 2 -m 2G \
             -bios /usr/share/qemu-efi-aarch64/QEMU_EFI.fd \
-            -blockdev driver=file,node-name=cd,filename=alpine-virt-3.12.1-aarch64.iso,read-only=on,force-share=on -device virtio-blk-device,drive=cd \
+            -blockdev driver=file,node-name=cd,filename=alpine-virt-3.15.4-aarch64.iso,read-only=on,force-share=on -device virtio-blk-device,drive=cd \
             -chardev stdio,id=screen,mux=on,signal=off -serial chardev:screen -mon screen \
-            -netdev tap,id=net,ifname=tap0,script=no,downscript=no -device virtio-net-device,netdev=net,mac=0A:00:00:00:00:01 \
+            -netdev user,id=net,ipv4=on -device virtio-net,netdev=net,mac=02:00:00:00:00:01 \
             -blockdev driver=file,node-name=hd,filename=hd.raw -device virtio-blk-device,drive=hd
         ```
 
@@ -58,20 +52,3 @@
     * `lbu commit`
 * [QEMU docs](https://www.qemu.org/docs/master/system/invocation.html)
 
-## /etc/netplan/50-cloud-init.yaml
-```yaml
-network:
-    ethernets:
-        eth0:
-            dhcp4: false
-            match:
-                driver: bcmgenet smsc95xx lan78xx
-            optional: true
-            set-name: eth0
-    bridges:
-        br0:
-            macaddress: 02:00:00:00:00:01
-            interfaces: [eth0]
-            dhcp4: true
-    version: 2
-```
