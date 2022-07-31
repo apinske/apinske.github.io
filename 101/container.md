@@ -8,6 +8,6 @@
 * network
 * overlay fs
 * docker/podman (UI/build), containerd (Net/Images), runc (Runtime); lxc
-   * image (tar ball)
+   * image (tar ball) contains userland
 * unshare/nsenter
 * Container from scratch [sample](https://github.com/apinske/simpleos/tree/master/linux/x86)
