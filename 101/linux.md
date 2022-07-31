@@ -9,7 +9,7 @@
 * syscall interface
 
 ## Userland
-* libc (glibs, musl libc) 
+* libc (glibc, musl libc) 
     * uses syscall interface
     * [POSIX](https://pubs.opengroup.org/onlinepubs/9699919799/)
 * init system
