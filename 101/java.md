@@ -21,7 +21,7 @@
     * Graal (JIT, AOT)
     * Android: Dalvik - JIT, Android Runtime (ART) - AOT
 
-## JDK Distros
+## JRE/JDK Distros
 * Upstream: [OpenJDK](https://github.com/openjdk/jdk) - reference implementation (RI)
     * open-sourced by Sun in 2007
     * Hotspot, Class-Lib
@@ -35,4 +35,18 @@
 * Oracle
 * IBM (nur bis 8)
 * SAP
+* ...
+
+## Specs (JSR) und Impls (Auswahl)
+* **Umzug Jakarta**
+* [Servlet](https://jcp.org/en/jsr/detail?id=340)
+    * Tomcat, Jetty, ...
+* [JAXB](https://jcp.org/en/jsr/detail?id=222)
+* [JAX-WS](https://jcp.org/en/jsr/detail?id=224)
+* [JDBC](https://jcp.org/en/jsr/detail?id=221)
+* [JPA](https://jcp.org/en/jsr/detail?id=338)
+    * [EclipseLink](https://www.eclipse.org/eclipselink/) (RI)
+    * [Hibernate ORM](https://hibernate.org/orm/)
+* [JMS](https://jcp.org/en/jsr/detail?id=343)
+* [JTA](https://jcp.org/en/jsr/detail?id=907)
 * ...
