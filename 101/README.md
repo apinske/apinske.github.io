@@ -3,12 +3,12 @@
 ## Java
 * [Java, JVM](java.md)
 * [Build](build.md)
-* Spring
-* Spring Boot
+* [Spring](spring.md)
+* [Spring Boot](spring-boot.md)
 * [Logging](logging.md)
 * [Transaktionen](tx.md)
 
 ## Linux
-* Kernel + Userland
+* [Kernel + Userland](linux.md)
 * [VM](vm.md)
 * [Container](container.md)
