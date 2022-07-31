@@ -6,7 +6,15 @@
     * "Accommodate diverse perspectives. Spring embraces flexibility and is not opinionated about how things should be done."
 * IoC
   * Bean
+      * xml
+      * @Bean config method
+      * component-scan (@Component, ...)
+   * DI
+      * @Autowired (ctor, setter, field)
+   * Lifecycle
 * AOP
+   * Interceptors
+   * Proxys (JDK, CGLib)
 * "Helpers"
     * TX
     * DAO (z.B. JDBC, JPA)
@@ -20,8 +28,10 @@
     * "We take an opinionated view of the Spring platform and third-party libraries, so that you can get started with minimum fuss."
 * [Initializr](https://start.spring.io)
 * Autoconfig
-* Packaging
-* Actuator
+   * when on classpath
+   * customize using properties
+* Packaging (z.B. uber-jar)
+* Actuator (z.B. Properties, Beans)
 
 ## weitere Spring Projekte
 * Data
