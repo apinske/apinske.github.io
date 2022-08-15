@@ -2,7 +2,7 @@
 * [Ubuntu on Hetzner](ubuntu-hetzner.md)
 * macOS
   * [Ubuntu on macOS](ubuntu-macos.md)
-  * [podman on macOS](podman-macos.md)
+  * [podman on macOS](https://github.com/apinske/virt)
 * Raspberry Pi
   * [Ubuntu on Raspberry Pi](ubuntu-raspi.md)
   * [KVM on ARM64 (Raspberry Pi 4)](kvm-raspi.md)
