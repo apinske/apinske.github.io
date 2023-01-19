@@ -1,6 +1,6 @@
 # Ubuntu on Raspberry Pi
 
-* `curl https://cdimage.ubuntu.com/releases/22.04/release/ubuntu-22.04-preinstalled-server-arm64+raspi.img.xz | xz -d - > sd.img`
+* `curl https://cdimage.ubuntu.com/ubuntu-server/jammy/daily-preinstalled/current/jammy-preinstalled-server-arm64+raspi.img.xz | xz -d - > sd.img`
 * `diskutil unmountDisk /dev/disk2`
 * `sudo dd bs=1m if=sd.img of=/dev/rdisk2`
 * append ` modules-load=g_ether` to `/Volumes/system-boot/cmdline.txt`
