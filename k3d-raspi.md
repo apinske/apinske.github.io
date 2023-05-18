@@ -31,7 +31,7 @@
 
 ## hello-kubernetes.yaml
 ```yaml
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: hello-kubernetes
@@ -42,9 +42,12 @@ spec:
   - http:
       paths:
       - path: /
+        pathType: Prefix
         backend:
-          serviceName: hello-kubernetes
-          servicePort: 80
+          service:
+            name: hello-kubernetes
+            port: 
+              number: 80
 ---
 apiVersion: v1
 kind: Service
