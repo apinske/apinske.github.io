@@ -61,7 +61,7 @@ EOF
   genisoimage -output ci.iso -volid cidata -joliet -rock ci/
   rm -rf ci
 
-  mv jammy-server-cloudimg-amd64.img vda.img
+  mv noble-server-cloudimg-amd64.img vda.img
   truncate -s 10G vda.img
 
   MACADDR="52:54:00:$(dd if=/dev/urandom bs=512 count=1 2>/dev/null | md5sum | sed 's/^\(..\)\(..\)\(..\).*$/\1:\2:\3/')"
