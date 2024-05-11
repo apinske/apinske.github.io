@@ -1,6 +1,6 @@
 # Ubuntu on Hetzner Server
 ## Rescue Installation
-* `installimage -n srv1.pinske.dev -r yes -l 1 -d sda,sdb -p /boot:ext2:512M,/:ext4:all -i /root/images/Ubuntu-2204-jammy-amd64-base.tar.gz -t yes -a`
+* `installimage -n srv1.pinske.dev -r yes -l 1 -d sda,sdb -p /boot:ext2:512M,/:ext4:all -i /root/images/Ubuntu-2404-noble-amd64-base.tar.gz -t yes -a`
 
 ## Setup
 * update: `apt update && apt upgrade`
@@ -16,17 +16,15 @@
 * edit netplan
 * `sudo netplan try`
 * `sudo apt install qemu-system-x86 genisoimage`
-* `sudo ip tuntap add dev tapX mode tap user apinske`
-* `sudo ip link set tapX master br0`
-* `sudo ip link set tapX up`
+* `for i in $(seq 1 4); do sudo ip tuntap add dev tap$i mode tap user apinske && sudo ip link set tap$i master br0 && sudo ip link set tap$i up; done`
 
 ## Ubuntu VM
 ```sh
 #!/bin/sh
 if [ ! -f vda.img ]; then
-  wget -O- https://cloud-images.ubuntu.com/jammy/current/jammy-server-cloudimg-amd64.tar.gz | tar xzf - jammy-server-cloudimg-amd64.img
-  wget -O initrd https://cloud-images.ubuntu.com/jammy/current/unpacked/jammy-server-cloudimg-amd64-initrd-generic
-  wget -O vmlinuz https://cloud-images.ubuntu.com/jammy/current/unpacked/jammy-server-cloudimg-amd64-vmlinuz-generic
+  wget -O- https://cloud-images.ubuntu.com/noble/current/noble-server-cloudimg-amd64.tar.gz | tar xzf - noble-server-cloudimg-amd64.img
+  wget -O initrd https://cloud-images.ubuntu.com/noble/current/unpacked/noble-server-cloudimg-amd64-initrd-generic
+  wget -O vmlinuz https://cloud-images.ubuntu.com/noble/current/unpacked/noble-server-cloudimg-amd64-vmlinuz-generic
 
   VM_NAME=$(basename $PWD)
   VM_NO=$(echo $VM_NAME | tr -cd '[:digit:]')
