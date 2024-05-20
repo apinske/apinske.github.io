@@ -81,6 +81,30 @@ EOF
 fi
 ```
 
+## HAProxy
+* `sudo apt install haproxy`
+* `sudo vi /etc/haproxy/haproxy.cfg`
+* `sudo systemctl restart haproxy`
+
+```
+frontend http_redirect
+        bind *:80
+        mode http
+        option httplog
+        http-request redirect scheme https unless { ssl_fc }
+frontend https_proxy
+        bind *:443
+        mode tcp
+        option tcplog
+        tcp-request inspect-delay 5s
+        tcp-request content capture req.ssl_sni len 25
+        use_backend %[req.ssl_sni,lower]
+
+backend one.pinske.eu
+        mode tcp
+        server one1 [2a01:4f8:171:334c::a1]:443
+```
+
 ## .bashrc
 ```bash
 alias env_sshauth='export SSH_AUTH_SOCK="$(tmux show-env | sed -n 's/^SSH_AUTH_SOCK=//p')"'
