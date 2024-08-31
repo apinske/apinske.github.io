@@ -105,6 +105,17 @@ backend one.pinske.eu
         server one1 [2a01:4f8:171:334c::a1]:443
 ```
 
+## Caddy (VM)
+* `sudo apt install caddy`
+* `sudo vi /etc/caddy/Caddyfile`
+* `sudo systemctl reload caddy`
+
+```
+one.pinske.it {
+    reverse_proxy localhost:8080
+}
+```
+
 ## .bashrc
 ```bash
 alias env_sshauth='export SSH_AUTH_SOCK="$(tmux show-env | sed -n 's/^SSH_AUTH_SOCK=//p')"'
