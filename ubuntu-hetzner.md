@@ -34,18 +34,18 @@ if [ ! -f vda.img ]; then
 password: ubuntu
 chpasswd:
   expire: False
-ssh_pwauth: False 
+ssh_pwauth: False
 ssh_authorized_keys:
   - $(cat ~/.ssh/authorized_keys)
 EOF
   cat << EOF > ci/meta-data
 instance-id: iid-local-$VM_NAME
-local-hostname: $VM_NAME 
+local-hostname: $VM_NAME
 EOF
   cat << EOF > ci/network-config
 version: 2
 ethernets:
-  ens2:
+  ens4:
     addresses:
       - 2a01:4f8:171:334c::a$VM_NO/64
     gateway6: fe80::1
@@ -54,9 +54,6 @@ ethernets:
           - 2a01:4f8:0:1::add:9898
           - 2a01:4f8:0:1::add:9999
           - 2a01:4f8:0:1::add:1010
-  ens3:
-    dhcp4: true
-    link-local: []
 EOF
   genisoimage -output ci.iso -volid cidata -joliet -rock ci/
   rm -rf ci
@@ -67,15 +64,11 @@ EOF
   MACADDR="52:54:00:$(dd if=/dev/urandom bs=512 count=1 2>/dev/null | md5sum | sed 's/^\(..\)\(..\)\(..\).*$/\1:\2:\3/')"
   cat << EOF > run.sh
 #!/bin/sh
-qemu-system-x86_64 \\
-    -nodefaults -nographic \\
-    -machine ubuntu -cpu host -accel kvm -smp 2 -m 16G \\
-    -chardev stdio,id=screen,mux=on,signal=off -serial chardev:screen -mon screen \\
-    -netdev tap,id=net1,ifname=tap$VM_NO,script=no,downscript=no -device virtio-net,netdev=net1,mac=$MACADDR \\
-    -netdev user,id=net2,ipv4=on -device virtio-net,netdev=net2,mac=02:00:00:00:00:f$VM_NO \\
-    -blockdev driver=file,node-name=vda,filename=vda.img -device virtio-blk,drive=vda \\
-    -blockdev driver=file,node-name=ci,filename=ci.iso -device virtio-blk,drive=ci \\
-    -kernel vmlinuz -initrd initrd -append "console=ttyS0 root=/dev/vda"
+../cloud-hypervisor-static --api-socket path=api \\
+    --cpus boot=2 --memory size=16G \\
+    --net tap=tap$VM_NO,mac=$MACADDR \\
+    --disk path=vda.img path=ci.iso,readonly=on \\
+    --kernel vmlinuz --initramfs initrd --cmdline "console=hvc0 root=/dev/vda"
 EOF
   chmod +x run.sh
 fi
@@ -100,7 +93,7 @@ frontend https_proxy
         tcp-request content capture req.ssl_sni len 25
         use_backend %[req.ssl_sni,lower]
 
-backend one.pinske.eu
+backend one.pinske.it
         mode tcp
         server one1 [2a01:4f8:171:334c::a1]:443
 ```
