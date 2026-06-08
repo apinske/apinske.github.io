@@ -1,4 +1,4 @@
-# podman on macOS
+# docker on macOS
 ## Setup
 * `brew install container docker`
 * `sudo container system dns create ctr`
