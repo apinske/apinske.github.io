@@ -1,7 +1,6 @@
 # docker on macOS
 ## Setup
-* install https://github.com/apple/container/releases/download/1.0.0/container-1.0.0-installer-signed.pkg
-* `brew install docker`
+* `brew install container docker`
 * `sudo container system dns create ctr`
 * `container run -m 4G -c 2 --rosetta --name docker -v docker:/var/lib/docker -v ~/Documents/repos:/mnt/repos -d docker dockerd --tls=false --host=tcp://0.0.0.0:2375 --host=unix:///var/run/docker.sock`
   * `--insecure-registry ...`
