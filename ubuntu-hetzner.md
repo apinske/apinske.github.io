@@ -1,6 +1,6 @@
-# Ubuntu on Hetzner Server
+# Debian on Hetzner Server
 ## Rescue Installation
-* `installimage -n srv1.pinske.dev -r yes -l 1 -d sda,sdb -p /boot:ext2:512M,/:ext4:all -i /root/images/Ubuntu-2404-noble-amd64-base.tar.gz -t yes -a`
+* `installimage -n srv1.pinske.dev -r yes -l 1 -d sda,sdb -p /boot:ext2:512M,/:ext4:all -i /root/images/Debian-trixie-latest-amd64-base.tar.zst -t yes -a`
 
 ## Setup
 * update: `apt update && apt upgrade`
@@ -9,10 +9,10 @@
 * `cp -R /root/.ssh /home/apinske/`
 * `chown -R apinske:users /home/apinske/.ssh`
 * `echo "apinske ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/apinske`
-* `/etc/sysctl.conf`: `sysctl -w net.ipv6.conf.all.forwarding=1`
-* `ebtables -t nat -A POSTROUTING -j snat --to-src <MACADDR>`
 
 ## KVM
+* `/etc/sysctl.conf`: `sysctl -w net.ipv6.conf.all.forwarding=1`
+* `ebtables -t nat -A POSTROUTING -j snat --to-src <MACADDR>`
 * edit netplan
 * `sudo netplan try`
 * `sudo apt install qemu-system-x86 genisoimage`
