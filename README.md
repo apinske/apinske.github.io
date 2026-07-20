@@ -1,5 +1,5 @@
 # Artikel
-* [Ubuntu on Hetzner](ubuntu-hetzner.md)
+* [Debian on Hetzner](debian-hetzner.md)
 * macOS
   * [Ubuntu on macOS](ubuntu-macos.md)
   * [podman on macOS](https://github.com/apinske/virt)
