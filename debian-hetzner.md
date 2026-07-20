@@ -22,16 +22,14 @@
 ```sh
 #!/bin/sh
 if [ ! -f vda.img ]; then
-  wget -O- https://cloud-images.ubuntu.com/noble/current/noble-server-cloudimg-amd64.tar.gz | tar xzf - noble-server-cloudimg-amd64.img
-  wget -O initrd https://cloud-images.ubuntu.com/noble/current/unpacked/noble-server-cloudimg-amd64-initrd-generic
-  wget -O vmlinuz https://cloud-images.ubuntu.com/noble/current/unpacked/noble-server-cloudimg-amd64-vmlinuz-generic
+  wget -O- https://cloud.debian.org/images/cloud/trixie/latest/debian-13-genericcloud-amd64.tar.xz | tar -xJf -
 
   VM_NAME=$(basename $PWD)
   VM_NO=$(echo $VM_NAME | tr -cd '[:digit:]')
   mkdir ci
   cat << EOF > ci/user-data
 #cloud-config
-password: ubuntu
+password: debian
 chpasswd:
   expire: False
 ssh_pwauth: False
@@ -58,7 +56,7 @@ EOF
   genisoimage -output ci.iso -volid cidata -joliet -rock ci/
   rm -rf ci
 
-  mv noble-server-cloudimg-amd64.img vda.img
+  mv disk.raw vda.img
   truncate -s 10G vda.img
 
   MACADDR="52:54:00:$(dd if=/dev/urandom bs=512 count=1 2>/dev/null | md5sum | sed 's/^\(..\)\(..\)\(..\).*$/\1:\2:\3/')"
