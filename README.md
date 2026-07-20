@@ -1,9 +1,9 @@
 # Artikel
 * [Debian on Hetzner](debian-hetzner.md)
 * macOS
-  * [Ubuntu on macOS](ubuntu-macos.md)
-  * [podman on macOS](https://github.com/apinske/virt)
   * [container on macOS](container-macos.md)
+  * (old) [podman on macOS](https://github.com/apinske/virt)
+  * (old) [Ubuntu on macOS](ubuntu-macos.md)
 * Raspberry Pi
   * [Ubuntu on Raspberry Pi](ubuntu-raspi.md)
   * [KVM on ARM64 (Raspberry Pi 4)](kvm-raspi.md)
